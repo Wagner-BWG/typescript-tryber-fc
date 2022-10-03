@@ -20,7 +20,7 @@ class UserController {
       return res.status(400).json({ message: 'All fields must be filled' });
     }
 
-    const response = await this.userService.FindOne(email, password);
+    const response = await this.userService.FindOne(email);
     res.locals = response;
     next();
   };
