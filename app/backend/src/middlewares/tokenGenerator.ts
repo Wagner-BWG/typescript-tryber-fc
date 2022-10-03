@@ -8,7 +8,9 @@ class TokenGenerator {
     const secret = process.env.JWT_SECRET || 'jwt_secret';
 
     const { role } = userInfo;
+
     const token = jwt.sign({ data: { role } }, secret);
+
     return res.status(200).json({ token });
   };
 }

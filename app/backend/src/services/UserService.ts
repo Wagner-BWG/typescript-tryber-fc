@@ -4,7 +4,7 @@ class UserService {
   private model = User;
 
   public async FindOne(email: string): Promise<User []> {
-    const response = this.model.findAll<User>({
+    const response = await this.model.findAll<User>({
       where: {
         email,
       },
