@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import UserService from '../services/UserService';
 
 class UserController {
@@ -8,15 +8,20 @@ class UserController {
     this.userService = new UserService();
   }
 
-  public findOne = async (req: Request, res: Response): Promise<Response> => {
+  public findUser =
+  async (req: Request, res: Response, next: NextFunction) : Promise<void | Response> => {
     const { email, password } = req.body;
-    if (!email && !password) {
-      return res.status(200).json({ response: 'funfa' });
+
+    if (!email) {
+      return res.status(400).json({ message: 'All fields must be filled' });
     }
-    console.log(this.userService);
+    if (!password) {
+      return res.status(400).json({ message: 'All fields must be filled' });
+    }
+
     const response = await this.userService.FindOne(email, password);
-    console.log(response);
-    return res.status(200).json(response);
+    res.locals = response;
+    next();
   };
 }
 
