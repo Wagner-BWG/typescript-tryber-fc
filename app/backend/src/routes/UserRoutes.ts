@@ -15,4 +15,6 @@ UserRoutes.post(
   tokenGenerator.generateToken,
 );
 
+UserRoutes.get('/login/validate', userController.getRole);
+
 export default UserRoutes;
