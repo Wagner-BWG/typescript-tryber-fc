@@ -4,7 +4,6 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import * as jwt from 'jsonwebtoken';
 import Match from '../database/models/MatchModel';
 
 import { Response } from 'superagent';
@@ -24,7 +23,7 @@ describe('When making a GET request to /matches,', () => {
   });
 
   after(()=>{
-    (Math.findAll as sinon.SinonStub).restore();
+    (Match.findAll as sinon.SinonStub).restore();
   })
 
   it('returns status 200',async () => {

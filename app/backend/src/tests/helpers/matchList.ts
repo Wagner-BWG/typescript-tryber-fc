@@ -6,12 +6,6 @@ const fakeMatchesList = [
     awayTeam: 3,
     awayTeamGoals: 1,
     inProgress: false,
-    teamHome: {
-      teamName: "Trybe Futebol Clube"
-    },
-    teamAway: {
-      teamName: "Sociedade Esportiva de Futebol"
-    }
   },
   {
     id: 2,
@@ -20,12 +14,6 @@ const fakeMatchesList = [
     awayTeam: 2,
     awayTeamGoals: 0,
     inProgress: true,
-    teamHome: {
-      teamName: "Associação Futebolística de Esporte"
-    },
-    teamAway: {
-      teamName: "XV de Catorze"
-    }
   }
 ]
 
