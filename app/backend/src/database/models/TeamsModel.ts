@@ -23,3 +23,5 @@ Teams.init({
   modelName: 'teams',
   timestamps: false,
 });
+
+export default Teams;
