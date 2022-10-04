@@ -4,7 +4,6 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import * as jwt from 'jsonwebtoken';
 import Team from '../database/models/TeamModel';
 import fakeTeamsList from './helpers/teamsList';
 
