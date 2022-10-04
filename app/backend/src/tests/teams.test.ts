@@ -40,7 +40,7 @@ describe('When making a GET request to /teams,', () => {
   });
 });
 
-describe('When making a GET request to /teams:id,', () => {
+describe('When making a GET request to /teams/:id,', () => {
   let chaiHttpResponse: Response;
   let id = 1;
 
@@ -51,15 +51,15 @@ describe('When making a GET request to /teams:id,', () => {
   });
 
   after(()=>{
-    (Team.findAll as sinon.SinonStub).restore();
+    (Team.findOne as sinon.SinonStub).restore();
   })
 
   it('returns status 200',async () => {
-    chaiHttpResponse = await chai.request(app).get(`/teams:${id}`)
+    chaiHttpResponse = await chai.request(app).get(`/teams/:${id}`)
     expect(chaiHttpResponse.status).to.equal(200)
   });
   it('returns the team of the corresponding id',async () => {
-    chaiHttpResponse = await chai.request(app).get(`/teams:${id}`)
+    chaiHttpResponse = await chai.request(app).get(`/teams/:${id}`)
     expect(chaiHttpResponse.body).to.an('object')
     expect(chaiHttpResponse.body).to.be.deep.equal(fakeTeamsList[id])
     expect(chaiHttpResponse.body.teamName).to.an('string')
