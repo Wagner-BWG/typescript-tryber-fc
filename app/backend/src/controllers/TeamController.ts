@@ -12,6 +12,12 @@ class TeamController {
     const response = await this.teamService.getAll();
     return res.status(200).json(response);
   };
+
+  public getOne = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params;
+    const response = await this.teamService.getOne(id);
+    return res.status(200).json(response);
+  };
 }
 
 export default TeamController;
