@@ -140,6 +140,52 @@ describe('When making a POST request to /login with a correct email and password
   });
 });
 
+describe('When making a GET request to /login/validate without a token,', () => {
+  let chaiHttpResponse: Response;
+
+  const stubLogin = {
+    email: "admin@admin.com",
+    password: "secret_admin",
+  }
+
+  const { role } = stubUser;
+
+  it('returns status 200',async () => {
+    chaiHttpResponse = await chai.request(app).get('/login/validate')
+    expect(chaiHttpResponse.status).to.equal(400)
+  });
+  it('returns the corresponding role',async () => {
+    chaiHttpResponse = await chai.request(app).get('/login/validate')
+    expect(chaiHttpResponse.body).to.an('object')
+    expect(chaiHttpResponse.body.message).to.an('string')
+    expect(chaiHttpResponse.body.message).to.be.equal('Invalid token')
+  });
+});
+
+describe('When making a GET request to /login/validate with a invalid token,', () => {
+  let chaiHttpResponse: Response;
+
+  const stubLogin = {
+    email: "admin@admin.com",
+    password: "secret_admin",
+  }
+
+  const { role } = stubUser;
+  const stubToken = 'not_a_token';
+
+  it('returns status 200',async () => {
+    chaiHttpResponse = await chai.request(app).get('/login/validate').set({ Authorization: stubToken})
+    expect(chaiHttpResponse.status).to.equal(400)
+  });
+  it('returns the corresponding role',async () => {
+    chaiHttpResponse = await chai.request(app).get('/login/validate').set({ Authorization: stubToken})
+    expect(chaiHttpResponse.body).to.an('object')
+    expect(chaiHttpResponse.body.message).to.an('string')
+    expect(chaiHttpResponse.body.message).to.be.equal('Invalid token')
+  });
+});
+
+
 describe('When making a GET request to /login/validate with a proper token,', () => {
   let chaiHttpResponse: Response;
 
