@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       homeTeam: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         field: 'home_team',
       },
