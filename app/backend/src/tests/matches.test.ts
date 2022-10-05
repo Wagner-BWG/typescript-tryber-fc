@@ -19,7 +19,7 @@ describe('When making a GET request to /matches,', () => {
   before(async () => {
     return sinon
       .stub(Match, "findAll")
-      .resolves(fakeMatchesList as Match[]);
+      .resolves(fakeMatchesList as []);
   });
 
   after(()=>{
@@ -31,10 +31,8 @@ describe('When making a GET request to /matches,', () => {
     expect(chaiHttpResponse.status).to.equal(200)
   });
   it('returns all teams',async () => {
-    chaiHttpResponse = await chai.request(app).get('/matches')
+    chaiHttpResponse = await chai.request(app).get('/matches')    
     expect(chaiHttpResponse.body).to.an('array')
     expect(chaiHttpResponse.body).to.be.deep.equal(fakeMatchesList)
-    expect(chaiHttpResponse.body[0].teamHome.teamName).to.an('string')
-    expect(chaiHttpResponse.body[0].teamHome.teamName).to.be.equal('Trybe Futebol Clube')
   });
 });

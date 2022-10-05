@@ -2,7 +2,7 @@ const fakeMatchesList = [
   {
     id: 1,
     homeTeam: 1,
-    homeTeamGoals: 1,
+    homeTeamGoalss: 1,
     awayTeam: 3,
     awayTeamGoals: 1,
     inProgress: false,
