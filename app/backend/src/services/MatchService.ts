@@ -25,6 +25,11 @@ class MatchService {
     });
     return response;
   };
+
+  public createEntry = async (data: Match) => {
+    const newEntry = await this.matchModel.create(data);
+    return newEntry;
+  };
 }
 
 export default MatchService;
