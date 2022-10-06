@@ -4,6 +4,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
+import * as jwt from 'jsonwebtoken';
 import Match from '../database/models/MatchModel';
 
 import { Response } from 'superagent';
@@ -86,3 +87,39 @@ describe('When making a GET request to /matches with the query inProgress=false,
     expect(chaiHttpResponse.body[0].inProgress).to.be.false
   });
 });
+
+describe('When making a POST request to /matches with a valid token', () => {
+  let chaiHttpResponse: Response;
+
+  before(async () => {
+    return sinon
+      .stub(Match, "create")
+      .resolves(fakeMatchesList[0] as Match);
+  });
+
+  after(()=>{
+    (Match.create as sinon.SinonStub).restore();
+  })
+
+  const stubMatch = {
+    homeTeam: 1,
+    homeTeamGoalss: 1,
+    awayTeam: 3,
+    awayTeamGoals: 1,
+    inProgress: false,
+  }
+  const secret = process.env.JWT_SECRET || 'jwt_secret';
+  const stubToken = jwt.sign({ data: { role: 'user' } }, secret);
+
+  it('returns status 201',async () => {
+    chaiHttpResponse = await chai.request(app).post('/matches').set({ Authorization: stubToken}).field(stubMatch)
+    expect(chaiHttpResponse.status).to.equal(201)
+  });
+  it('returns the newly inserted match in the DB',async () => {
+    chaiHttpResponse = await chai.request(app).post('/matches').set({ Authorization: stubToken}).field(stubMatch)
+    console.log(chaiHttpResponse);
+    
+    expect(chaiHttpResponse.body).to.an('object')
+    expect(chaiHttpResponse.body).to.be.deep.equal(fakeMatchesList[0])
+  });
+})
