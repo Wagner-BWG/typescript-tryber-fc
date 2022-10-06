@@ -9,7 +9,8 @@ class MatchController {
   }
 
   public getAll = async (req: Request, res: Response): Promise<Response> => {
-    const response = await this.matchsService.getAll();
+    const { inProgress } = req.query;
+    const response = await this.matchsService.getAll(inProgress as string);
     return res.status(200).json(response);
   };
 }
