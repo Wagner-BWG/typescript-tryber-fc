@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import * as jwt from 'jsonwebtoken';
+// import * as jwt from 'jsonwebtoken';
 import UserService from '../services/UserService';
 
 class UserController {
@@ -26,21 +26,8 @@ class UserController {
   };
 
   public getRole = async (req: Request, res: Response): Promise<Response> => {
-    const token = req.headers.authorization;
-    const secret = process.env.JWT_SECRET || 'jwt_secret';
-
-    if (typeof token === 'string') {
-      try {
-        const user: string | jwt.JwtPayload | null = jwt.verify(token, secret);
-        if (user && typeof user === 'object') {
-          const { role } = user.data;
-          return res.status(200).json({ role });
-        }
-      } catch (error) {
-        return res.status(400).json({ message: 'Invalid token' });
-      }
-    }
-    return res.status(400).json({ message: 'Invalid token' });
+    const role = res.locals;
+    return res.status(200).json({ role });
   };
 }
 
