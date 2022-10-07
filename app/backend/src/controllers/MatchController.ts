@@ -15,14 +15,13 @@ class MatchController {
     return res.status(200).json(response);
   };
 
-  public createMatch = async (req:Request, res: Response) => {
+  public createMatch = async (req:Request, res: Response): Promise<Response> => {
     const data = req.body;
 
-    const newEntry = await this.matchsService.createEntry(data) as Match;
-    if (newEntry.id) {
-      return res.status(201).json(newEntry);
-    }
-    return res.status(401).json(newEntry);
+    const newEntry = await this.matchsService.createEntry(data) as
+    { status: number, json: string | Match };
+    const { status, json } = newEntry;
+    return res.status(status).json(json);
   };
 
   public endMatch = async (req: Request, res: Response) => {

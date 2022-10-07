@@ -26,23 +26,32 @@ class MatchService {
     return response;
   };
 
-  public validateMatch = async (data: Match): Promise<null | object> => {
-    let { inProgress } = data;
-    const { homeTeam, awayTeam } = data;
-    if (!inProgress) {
-      inProgress = true;
+  public validateMatch = async (data:Match): Promise<null | object> => {
+    const teamHome = await this.teamModel.findOne<Team>({
+      where: {
+        id: data.homeTeam,
+      },
+    }) as Team;
+    const teamAway = await this.teamModel.findOne<Team>({
+      where: {
+        id: data.awayTeam,
+      },
+    }) as Team;
+    if (!teamHome || !teamAway) {
+      return { status: 404, json: { message: 'There is no team with such id!' } };
     }
-    if (homeTeam === awayTeam) {
-      return { message: 'It is not possible to create a match with two equal teams' };
+    if (teamHome.id === teamAway.id) {
+      return { status: 401,
+        json: { message: 'It is not possible to create a match with two equal teams' } };
     }
     return null;
   };
 
-  public createEntry = async (data: Match): Promise<Match | object> => {
+  public createEntry = async (data: Match): Promise<object> => {
     let response = await this.validateMatch(data);
-    console.log(response);
     if (!response) {
-      response = await this.matchModel.create(data);
+      const json = await this.matchModel.create(data);
+      response = { status: 201, json };
     }
     return response;
   };
