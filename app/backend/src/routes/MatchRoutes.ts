@@ -8,6 +8,6 @@ const tokenValidator = new TokenValidator();
 
 MatchRoutes.get('/matches', matchController.getAll);
 MatchRoutes.post('/matches', tokenValidator.validateToken, matchController.createMatch);
-MatchRoutes.put('/matches/:id/finish', matchController.endMatch);
+MatchRoutes.patch('/matches/:id/finish', tokenValidator.validateToken, matchController.endMatch);
 
 export default MatchRoutes;

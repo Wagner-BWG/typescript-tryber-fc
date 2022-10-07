@@ -16,10 +16,10 @@ class TokenValidator {
           return next();
         }
       } catch (error) {
-        return res.status(400).json({ message: 'Invalid token' });
+        return res.status(401).json({ message: 'Token must be a valid token' });
       }
     }
-    return res.status(400).json({ message: 'Invalid token' });
+    return res.status(401).json({ message: 'Token must be a valid token' });
   };
 }
 
