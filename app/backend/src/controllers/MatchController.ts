@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import MatchService from '../services/MatchService';
+import Match from '../database/models/MatchModel';
 
 class MatchController {
   private matchsService: MatchService;
@@ -16,11 +17,18 @@ class MatchController {
 
   public createMatch = async (req:Request, res: Response) => {
     const data = req.body;
-    if (!data.inProgress) {
-      data.inProgress = false;
+
+    const newEntry = await this.matchsService.createEntry(data) as Match;
+    if (newEntry.id) {
+      return res.status(201).json(newEntry);
     }
-    const newEntry = await this.matchsService.createEntry(data);
-    return res.status(201).json(newEntry);
+    return res.status(401).json(newEntry);
+  };
+
+  public endMatch = async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id, 10);
+    await this.matchsService.endMatch(id);
+    return res.status(200).json({ message: 'Finished' });
   };
 }
 

@@ -26,9 +26,30 @@ class MatchService {
     return response;
   };
 
-  public createEntry = async (data: Match) => {
-    const newEntry = await this.matchModel.create(data);
-    return newEntry;
+  public validateMatch = async (data: Match): Promise<null | object> => {
+    let { inProgress } = data;
+    const { homeTeam, awayTeam } = data;
+    if (!inProgress) {
+      inProgress = true;
+    }
+    if (homeTeam === awayTeam) {
+      return { message: 'It is not possible to create a match with two equal teams' };
+    }
+    return null;
+  };
+
+  public createEntry = async (data: Match): Promise<Match | object> => {
+    let response = await this.validateMatch(data);
+    console.log(response);
+    if (!response) {
+      response = await this.matchModel.create(data);
+    }
+    return response;
+  };
+
+  public endMatch = async (id: number): Promise<null> => {
+    await this.matchModel.update({ inProgress: false }, { where: { id } });
+    return null;
   };
 }
 
