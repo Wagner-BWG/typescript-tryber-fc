@@ -29,6 +29,13 @@ class MatchController {
     await this.matchsService.endMatch(id);
     return res.status(200).json({ message: 'Finished' });
   };
+
+  public updateMatch = async (req: Request, res: Response) => {
+    const id = parseInt(req.params.id, 10);
+    const score = req.body;
+    await this.matchsService.updateMatch(id, score);
+    return res.status(200).json(score);
+  };
 }
 
 export default MatchController;

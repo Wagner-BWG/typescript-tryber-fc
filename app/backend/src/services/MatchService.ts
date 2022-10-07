@@ -60,6 +60,12 @@ class MatchService {
     await this.matchModel.update({ inProgress: false }, { where: { id } });
     return null;
   };
+
+  public updateMatch =
+  async (id: number, score: { homeTeamGoals: number, awayTeamGoals: number }): Promise<null> => {
+    await this.matchModel.update(score, { where: { id } });
+    return null;
+  };
 }
 
 export default MatchService;
