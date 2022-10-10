@@ -25,10 +25,10 @@ class LeaderboardService {
     this.matchsService = new MatchService();
   }
 
-  public getHomeLeaderboard = async (): Promise<TeamScore[]> => {
+  public getHomeLeaderboard = async (team: string): Promise<TeamScore[]> => {
     // const allMatches = await this.matchsService.getAll('false');
     const allMatches = await this.matchModel.findAll<Match>({
-      attributes: ['homeTeam', 'homeTeamGoals', 'awayTeamGoals'],
+      attributes: [`${team}Team`, 'homeTeamGoals', 'awayTeamGoals'],
       where: {
         inProgress: 'false',
       },
@@ -37,22 +37,23 @@ class LeaderboardService {
     const allTeams = await this.teamModel.findAll<Team>({
       raw: true,
     });
-    const leaderboard = this.composeHomeData(allMatches, allTeams);
+    const leaderboard = this.composeHomeData(allMatches, allTeams, team);
     return leaderboard;
   };
 
-  public composeHomeData = (allMatches: Match[], allTeams: Team[]): TeamScore[] => {
+  public composeHomeData = (allMatches: Match[], allTeams: Team[], team: string): TeamScore[] => {
     const teamResults: TeamScore[] = [];
     allMatches.forEach((match) => {
-      if (!teamResults[match.homeTeam]) {
-        teamResults[match.homeTeam] = this.defaultScoreGenerator();
+      const teamNumber = team === 'home' ? match.homeTeam : match.awayTeam;
+      if (!teamResults[teamNumber]) {
+        teamResults[teamNumber] = this.defaultScoreGenerator();
       }
-      teamResults[match.homeTeam].name = allTeams[match.homeTeam - 1].teamName;
-      teamResults[match.homeTeam] = this.calculateGoals(teamResults[match.homeTeam], match);
-      teamResults[match.homeTeam] = this.calculateVictories(teamResults[match.homeTeam], match);
-      teamResults[match.homeTeam].efficiency = (
-        ((teamResults[match.homeTeam].totalPoints * 100)
-      / (teamResults[match.homeTeam].totalGames * 3)).toFixed(2)
+      teamResults[teamNumber].name = allTeams[teamNumber - 1].teamName;
+      teamResults[teamNumber] = this.calculateGoals(teamResults[teamNumber], match, team);
+      teamResults[teamNumber] = this.calculateVictories(teamResults[teamNumber], match, team);
+      teamResults[teamNumber].efficiency = (
+        ((teamResults[teamNumber].totalPoints * 100)
+      / (teamResults[teamNumber].totalGames * 3)).toFixed(2)
       );
     });
     teamResults.shift();
@@ -60,22 +61,35 @@ class LeaderboardService {
     return leaderboard;
   };
 
-  private calculateGoals = (position: TeamScore, match: Match): TeamScore => {
+  private calculateGoals = (position: TeamScore, match: Match, team: string): TeamScore => {
     const teamResults = position;
     teamResults.totalGames += 1;
-    teamResults.goalsFavor += match.homeTeamGoals;
-    teamResults.goalsOwn += match.awayTeamGoals;
+    if (team === 'home') {
+      teamResults.goalsFavor += match.homeTeamGoals;
+      teamResults.goalsOwn += match.awayTeamGoals;
+    } else {
+      teamResults.goalsFavor += match.awayTeamGoals;
+      teamResults.goalsOwn += match.homeTeamGoals;
+    }
     teamResults.goalsBalance = teamResults.goalsFavor - teamResults.goalsOwn;
 
     return teamResults;
   };
 
-  private calculateVictories = (position: TeamScore, match: Match): TeamScore => {
+  private calculateVictories = (position: TeamScore, match: Match, team: string): TeamScore => {
     const teamResults = position;
-    if (match.homeTeamGoals > match.awayTeamGoals) {
+    let thisTeam; let rivalTeam;
+    if (team === 'home') {
+      thisTeam = match.homeTeamGoals;
+      rivalTeam = match.awayTeamGoals;
+    } else {
+      thisTeam = match.awayTeamGoals;
+      rivalTeam = match.homeTeamGoals;
+    }
+    if (thisTeam > rivalTeam) {
       teamResults.totalVictories += 1;
       teamResults.totalPoints += 3;
-    } else if (match.homeTeamGoals === match.awayTeamGoals) {
+    } else if (thisTeam === rivalTeam) {
       teamResults.totalDraws += 1;
       teamResults.totalPoints += 1;
     } else teamResults.totalLosses += 1;

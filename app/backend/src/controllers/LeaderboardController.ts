@@ -8,8 +8,13 @@ class LeaderboardController {
     this.leaderboardService = new LeaderboardService();
   }
 
-  public getLeaderboard = async (_req: Request, res: Response): Promise<Response> => {
-    const response = await this.leaderboardService.getHomeLeaderboard();
+  public getHomeLeaderboard = async (_req: Request, res: Response): Promise<Response> => {
+    const response = await this.leaderboardService.getHomeLeaderboard('home');
+    return res.status(200).json(response);
+  };
+
+  public getAwayLeaderboard = async (_req: Request, res: Response): Promise<Response> => {
+    const response = await this.leaderboardService.getHomeLeaderboard('away');
     return res.status(200).json(response);
   };
 }
