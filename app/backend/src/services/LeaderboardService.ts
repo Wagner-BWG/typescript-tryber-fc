@@ -25,7 +25,7 @@ class LeaderboardService {
     this.matchsService = new MatchService();
   }
 
-  public getHomeLeaderboard = async (team: string): Promise<TeamScore[]> => {
+  public getPartialLeaderboard = async (team: string): Promise<TeamScore[]> => {
     // const allMatches = await this.matchsService.getAll('false');
     const allMatches = await this.matchModel.findAll<Match>({
       attributes: [`${team}Team`, 'homeTeamGoals', 'awayTeamGoals'],
@@ -37,11 +37,12 @@ class LeaderboardService {
     const allTeams = await this.teamModel.findAll<Team>({
       raw: true,
     });
-    const leaderboard = this.composeHomeData(allMatches, allTeams, team);
+    const leaderboard = this.composePartialData(allMatches, allTeams, team);
     return leaderboard;
   };
 
-  public composeHomeData = (allMatches: Match[], allTeams: Team[], team: string): TeamScore[] => {
+  public composePartialData =
+  (allMatches: Match[], allTeams: Team[], team: string): TeamScore[] => {
     const teamResults: TeamScore[] = [];
     allMatches.forEach((match) => {
       const teamNumber = team === 'home' ? match.homeTeam : match.awayTeam;
@@ -145,6 +146,41 @@ class LeaderboardService {
       efficiency: '0.00',
     };
     return defaultScore;
+  };
+
+  public getCompleteLeaderboard = async () => {
+    const playingHome = await this.getPartialLeaderboard('home');
+    const playingAway = await this.getPartialLeaderboard('away');
+
+    const newLeaderboard: TeamScore[] = [];
+
+    playingHome.forEach((teamHome) => {
+      const awayStats = playingAway.find(
+        (teamAway) => teamHome.name === teamAway.name,
+      ) as TeamScore;
+      const team = this.composeEntireLeaderboardEntry(teamHome, awayStats);
+      newLeaderboard.push(team);
+    });
+    const leaderboard = this.organizeLeaderboard(newLeaderboard);
+    return leaderboard;
+  };
+
+  public composeEntireLeaderboardEntry = (teamHome: TeamScore, awayStats: TeamScore): TeamScore => {
+    const team = this.defaultScoreGenerator();
+    team.name = teamHome.name;
+    team.totalPoints = teamHome.totalPoints + awayStats.totalPoints;
+    team.totalGames = teamHome.totalGames + awayStats.totalGames;
+    team.totalVictories = teamHome.totalVictories + awayStats.totalVictories;
+    team.totalDraws = teamHome.totalDraws + awayStats.totalDraws;
+    team.totalLosses = teamHome.totalLosses + awayStats.totalLosses;
+    team.goalsFavor = teamHome.goalsFavor + awayStats.goalsFavor;
+    team.goalsOwn = teamHome.goalsOwn + awayStats.goalsOwn;
+    team.goalsBalance = teamHome.goalsBalance + awayStats.goalsBalance;
+    team.efficiency = (
+      ((team.totalPoints * 100)
+      / (team.totalGames * 3)).toFixed(2)
+    );
+    return team;
   };
 }
 

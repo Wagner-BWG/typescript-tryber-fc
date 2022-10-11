@@ -9,12 +9,17 @@ class LeaderboardController {
   }
 
   public getHomeLeaderboard = async (_req: Request, res: Response): Promise<Response> => {
-    const response = await this.leaderboardService.getHomeLeaderboard('home');
+    const response = await this.leaderboardService.getPartialLeaderboard('home');
     return res.status(200).json(response);
   };
 
   public getAwayLeaderboard = async (_req: Request, res: Response): Promise<Response> => {
-    const response = await this.leaderboardService.getHomeLeaderboard('away');
+    const response = await this.leaderboardService.getPartialLeaderboard('away');
+    return res.status(200).json(response);
+  };
+
+  public getCompleteLeaderboard = async (_req: Request, res: Response): Promise<Response> => {
+    const response = await this.leaderboardService.getCompleteLeaderboard();
     return res.status(200).json(response);
   };
 }
