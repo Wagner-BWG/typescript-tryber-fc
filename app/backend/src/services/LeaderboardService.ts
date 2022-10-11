@@ -25,8 +25,7 @@ class LeaderboardService {
     this.matchsService = new MatchService();
   }
 
-  public getPartialLeaderboard = async (team: string): Promise<TeamScore[]> => {
-    // const allMatches = await this.matchsService.getAll('false');
+  public getPartialLeaderboard = async (team: string, next?: boolean): Promise<TeamScore[]> => {
     const allMatches = await this.matchModel.findAll<Match>({
       attributes: [`${team}Team`, 'homeTeamGoals', 'awayTeamGoals'],
       where: {
@@ -37,7 +36,11 @@ class LeaderboardService {
     const allTeams = await this.teamModel.findAll<Team>({
       raw: true,
     });
-    const leaderboard = this.composePartialData(allMatches, allTeams, team);
+    const unorganizedLeaderboard = this.composePartialData(allMatches, allTeams, team);
+    if (next) {
+      return unorganizedLeaderboard;
+    }
+    const leaderboard = this.organizeLeaderboard(unorganizedLeaderboard);
     return leaderboard;
   };
 
@@ -58,8 +61,7 @@ class LeaderboardService {
       );
     });
     teamResults.shift();
-    const leaderboard = this.organizeLeaderboard(teamResults);
-    return leaderboard;
+    return teamResults;
   };
 
   private calculateGoals = (position: TeamScore, match: Match, team: string): TeamScore => {
@@ -149,8 +151,8 @@ class LeaderboardService {
   };
 
   public getCompleteLeaderboard = async () => {
-    const playingHome = await this.getPartialLeaderboard('home');
-    const playingAway = await this.getPartialLeaderboard('away');
+    const playingHome = await this.getPartialLeaderboard('home', true);
+    const playingAway = await this.getPartialLeaderboard('away', true);
 
     const newLeaderboard: TeamScore[] = [];
 
