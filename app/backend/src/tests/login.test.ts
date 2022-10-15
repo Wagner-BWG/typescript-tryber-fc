@@ -150,15 +150,15 @@ describe('When making a GET request to /login/validate without a token,', () => 
 
   const { role } = stubUser;
 
-  it('returns status 200',async () => {
+  it('returns status 401',async () => {
     chaiHttpResponse = await chai.request(app).get('/login/validate')
-    expect(chaiHttpResponse.status).to.equal(400)
+    expect(chaiHttpResponse.status).to.equal(401)
   });
-  it('returns the corresponding role',async () => {
+  it('returns a message informing the Token is invalid',async () => {
     chaiHttpResponse = await chai.request(app).get('/login/validate')
     expect(chaiHttpResponse.body).to.an('object')
     expect(chaiHttpResponse.body.message).to.an('string')
-    expect(chaiHttpResponse.body.message).to.be.equal('Invalid token')
+    expect(chaiHttpResponse.body.message).to.be.equal('Token must be a valid token')
   });
 });
 
@@ -173,15 +173,15 @@ describe('When making a GET request to /login/validate with a invalid token,', (
   const { role } = stubUser;
   const stubToken = 'not_a_token';
 
-  it('returns status 200',async () => {
+  it('returns status 401',async () => {
     chaiHttpResponse = await chai.request(app).get('/login/validate').set({ Authorization: stubToken})
-    expect(chaiHttpResponse.status).to.equal(400)
+    expect(chaiHttpResponse.status).to.equal(401)
   });
-  it('returns the corresponding role',async () => {
+  it('returns a message informing the Token is invalid',async () => {
     chaiHttpResponse = await chai.request(app).get('/login/validate').set({ Authorization: stubToken})
     expect(chaiHttpResponse.body).to.an('object')
     expect(chaiHttpResponse.body.message).to.an('string')
-    expect(chaiHttpResponse.body.message).to.be.equal('Invalid token')
+    expect(chaiHttpResponse.body.message).to.be.equal('Token must be a valid token')
   });
 });
 
