@@ -36,11 +36,10 @@ Estes são os endpoints que podem ser acessados através das requisições de um
 
 |Método|Funcionalidade|URL|Observações|
 |------|--------------|---|-----------|
-|`POST`|Efetua login de um usuário ou administrador cadastrado.|http://localhost:3001/login|Está requisição necessita de um JSON no formato: <details>
+|`POST`|Efetua login de um usuário ou administrador cadastrado.|http://localhost:3001/login|Está requisição necessita de um JSON no formato: <details> dsadasdsa </details>|
 ```
 {
 	"email": "admin@admin.com",
 	"password": "secret_admin"
 }
-```
-</details>|
+```|
