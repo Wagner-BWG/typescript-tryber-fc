@@ -44,6 +44,7 @@ Estes são os endpoints que podem ser acessados através das requisições de um
 |`POST`|Adiciona uma nova partida à lista de partidas.|http://localhost:3001/matches|[Está requsição necessita de um JSON e um header de autorização](#POSTmatch)|
 
 <details><summary>Apêndice</summary>
+
 <a name="POSTlogin">Body JSON para POST /login:</a>
 ```
 {
