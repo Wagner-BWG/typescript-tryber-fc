@@ -36,10 +36,10 @@ Estes são os endpoints que podem ser acessados através das requisições de um
 
 |Método|Funcionalidade|URL|Observações|
 |------|--------------|---|-----------|
-|`POST`|Efetua login de um usuário ou administrador cadastrado.|http://localhost:3001/login|<a name="headin">Está requisição necessita de um JSON</a>|
+|`POST`|Efetua login de um usuário ou administrador cadastrado.|http://localhost:3001/login|[Está requisição necessita de um JSON](#headin)|
 |`GET`|Retorna se a conta é um usuário ou administrador.|http://localhost:3001/login/validate|Está requisição necessita de um token em seu header.|
 |`GET`|Retorna os times cadastrados e seus respctivos ids.|http://localhost:3001/teams||
 |`GET`|Retorna um time cadastrado e seu respctivo id.|http://localhost:3001/teams/:id||
 |`GET`|Retorna a lista de todas as partidas.|http://localhost:3001/matches|Pode-se usar a query "inProgress=true" ou "inProgress=false" para retornar apenas partidas em progresso ou já terminadas.|
 
-[This is the link text](#headin)
+<a name="headin"></a>
