@@ -42,4 +42,11 @@ Estes são os endpoints que podem ser acessados através das requisições de um
 |`GET`|Retorna um time cadastrado e seu respctivo id.|http://localhost:3001/teams/:id||
 |`GET`|Retorna a lista de todas as partidas.|http://localhost:3001/matches|Pode-se usar a query "inProgress=true" ou "inProgress=false" para retornar apenas partidas em progresso ou já terminadas.|
 
-<a name="headin"></a>
+<a name="headin">
+```
+{
+	"email": "admin@admin.com",
+	"password": "secret_admin"
+}
+```
+</a>
