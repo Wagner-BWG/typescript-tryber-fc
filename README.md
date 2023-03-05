@@ -1,13 +1,4 @@
 # :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
  # ***TFC - Trybe Futebol Clube***
 
 O projeto ***TFC - Trybe Futebol Clube*** foi um projeto indivídual de propósito puramente educacional, parte do curso de desenvolvimento web da [Trybe](https://github.com/betrybe).
@@ -34,3 +25,7 @@ Para rodar os testes de integração disponívies, exceute na pasta raíz os seg
 npm install
 cd app/backend && npm test
 ```
+
+## Demonstração de uso:
+
+![Aplication Screenchot](app_screenshot.png "Aplication front page")
