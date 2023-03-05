@@ -28,10 +28,9 @@ A aplicação tem seus 3 componentes, backend, frontend e banco de dados, docker
 Clone o repositório e em sua pasta raíz execute o comando `npm run compose:up` para iniciar a aplicação dockerizada.
 O front-end é acessado via `localhost:3000` e o back-end via `localhost:3001`
 
-Para rodar os testes de integração disponívies, exceute na pasta raíz os seguintes comandos:
+Para rodar os testes de integração disponívies, exceute na pasta raíz os seguintes comandos para instalar as dependências e executar os testes:
 
 ```
 npm install
 cd app/backend && npm test
 ```
-Para instalar as dependências e executar os testes.
