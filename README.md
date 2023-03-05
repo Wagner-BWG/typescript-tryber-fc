@@ -36,16 +36,26 @@ Estes são os endpoints que podem ser acessados através das requisições de um
 
 |Método|Funcionalidade|URL|Observações|
 |------|--------------|---|-----------|
-|`POST`|Efetua login de um usuário ou administrador cadastrado.|http://localhost:3001/login|[Está requisição necessita de um JSON](#headin)|
-|`GET`|Retorna se a conta é um usuário ou administrador.|http://localhost:3001/login/validate|Está requisição necessita de um token em seu header.|
+|`POST`|Efetua login de um usuário ou administrador cadastrado.|http://localhost:3001/login|[Está requisição necessita de um JSON.](#POSTlogin)|
+|`GET`|Retorna se a conta é um usuário ou administrador.|http://localhost:3001/login/validate|[Está requisição necessita de um token em seu header.](#tokenUser)|
 |`GET`|Retorna os times cadastrados e seus respctivos ids.|http://localhost:3001/teams||
 |`GET`|Retorna um time cadastrado e seu respctivo id.|http://localhost:3001/teams/:id||
 |`GET`|Retorna a lista de todas as partidas.|http://localhost:3001/matches|Pode-se usar a query "inProgress=true" ou "inProgress=false" para retornar apenas partidas em progresso ou já terminadas.|
 
-<a name="headin">Body JSON para POST /login:</a>
+<a name="POSTlogin">Body JSON para POST /login:</a>
 ```
 {
 	"email": "admin@admin.com",
 	"password": "secret_admin"
 }
+```
+
+<a name="tokenUser">Token de usuário para GET /login/validade:</a>
+```
+authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InJvbGUiOiJ1c2VyIn0sImlhdCI6MTY2NDgxOTY4MH0.VzMj36UL8cQbX2no1eeSZevg-9x6gSAnIverABcC0A8"
+```
+
+Token de administrador para GET /login/validade:
+```
+authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE2NzgwNTk2NjB9.4tJ-_N31IEcXUh8vOONvAEbkGbG5Kz9Ldw5Gko_a2bQ"
 ```
