@@ -28,4 +28,19 @@ cd app/backend && npm test
 
 ## Demonstração de uso:
 
-![Aplication Screenchot](app_screenshot.png "Aplication front page")
+![Aplication Screenchot](app_screenshot.png "Pagina inicial da Aplicação")
+
+### Endpoints:
+
+Estes são os endpoints que podem ser acessados através das requisições de um API Client (como Insomnia ou Postman)
+
+|Método|Funcionalidade|URL|Observações|
+|------|--------------|---|-----------|
+|`POST`|Efetua login de um usuário ou administrador cadastrado.|http://localhost:3001/login|Está requisição necessita de um JSON no formato: <details>
+```
+{
+	"email": "admin@admin.com",
+	"password": "secret_admin"
+}
+```
+</details>|
