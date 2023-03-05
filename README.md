@@ -37,11 +37,13 @@ Estes são os endpoints que podem ser acessados através das requisições de um
 |Método|Funcionalidade|URL|Observações|
 |------|--------------|---|-----------|
 |`POST`|Efetua login de um usuário ou administrador cadastrado.|http://localhost:3001/login|[Está requisição necessita de um JSON.](#POSTlogin)|
-|`GET`|Retorna se a conta é um usuário ou administrador.|http://localhost:3001/login/validate|[Está requisição necessita de um token em seu header.](#tokenUser)|
+|`GET`|Retorna se a conta é um usuário ou administrador.|http://localhost:3001/login/validate|[Está requisição necessita de um header de autorização.](#tokenUser)|
 |`GET`|Retorna os times cadastrados e seus respctivos ids.|http://localhost:3001/teams||
 |`GET`|Retorna um time cadastrado e seu respctivo id.|http://localhost:3001/teams/:id||
 |`GET`|Retorna a lista de todas as partidas.|http://localhost:3001/matches|Pode-se usar a query "inProgress=true" ou "inProgress=false" para retornar apenas partidas em progresso ou já terminadas.|
+|`POST`|Adiciona uma nova partida à lista de partidas.|http://localhost:3001/matches|[Está requsição necessita de um JSON e um header de autorização](#POSTmatch)|
 
+<details><summary>Apêndice</summary>
 <a name="POSTlogin">Body JSON para POST /login:</a>
 ```
 {
@@ -59,3 +61,20 @@ Token de administrador para GET /login/validade:
 ```
 authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE2NzgwNTk2NjB9.4tJ-_N31IEcXUh8vOONvAEbkGbG5Kz9Ldw5Gko_a2bQ"
 ```
+
+<a name="POSTmatch">Exemplo Body JSON para POST /matches:</a>
+```
+{
+  "homeTeam": 1,
+  "homeTeamGoals": 2,
+  "awayTeam": 7,
+  "awayTeamGoals": 2,
+	"inProgress": true
+}
+```
+
+Token de usuário para o header "authorization":
+```
+authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InJvbGUiOiJ1c2VyIn0sImlhdCI6MTY2NDgxOTY4MH0.VzMj36UL8cQbX2no1eeSZevg-9x6gSAnIverABcC0A8"
+```
+</details>
