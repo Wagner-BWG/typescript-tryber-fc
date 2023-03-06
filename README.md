@@ -41,29 +41,37 @@ Estes são os endpoints que podem ser acessados através das requisições de um
 |`GET`|Retorna os times cadastrados e seus respctivos ids.|http://localhost:3001/teams||
 |`GET`|Retorna um time cadastrado e seu respctivo id.|http://localhost:3001/teams/:id||
 |`GET`|Retorna a lista de todas as partidas.|http://localhost:3001/matches|Pode-se usar a query "inProgress=true" ou "inProgress=false" para retornar apenas partidas em progresso ou já terminadas.|
-|`POST`|Adiciona uma nova partida à lista de partidas.|http://localhost:3001/matches|[Está requsição necessita de um JSON e um header de autorização](#POSTmatch)|
+|`POST`|Adiciona uma nova partida à lista de partidas.|http://localhost:3001/matches|[Está requsição necessita de um JSON](#POSTmatch) e um [header de autorização](#POSTlogin)|
+|`PATCH`|Marca uma partida como encerrada.|http://localhost:3001/matches/:id/finish|[Está requisição necessita de um header de autorização.](#tokenUser)|
+|`PATCH`|Altera o placar da partida.|http://localhost:3001/matches/:id/|[Está requsição necessita de um JSON](#PATCHmatch) e um [header de autorização](#POSTlogin)|
+|`GET`|Retorna o placar com a pontuação que os times fizeram nos jogos feitos "em casa"|http://localhost:3001/leaderboard/home||
+|`GET`|Retorna o placar com a pontuação que os times fizeram nos jogos feitos como "visitante"|http://localhost:3001/leaderboard/away||
+|`GET`|Retorna o placar com a pontuação geral|http://localhost:3001/leaderboard||
 
 <details><summary>Apêndice</summary>
 
-<a name="POSTlogin">Body JSON para POST /login:</a>
+<a name="POSTlogin">JSON de administrador para POST /login:</a>
 ```
 {
 	"email": "admin@admin.com",
 	"password": "secret_admin"
 }
 ```
+Obs: pode-se substituir admin por user para logar como usuário.
 
-<a name="tokenUser">Token de usuário para GET /login/validade:</a>
+<a name="tokenUser">Token de usuário para o header "authorization"</a>
+(Necessário em: GET /login/validade e POST /matches)
 ```
 authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InJvbGUiOiJ1c2VyIn0sImlhdCI6MTY2NDgxOTY4MH0.VzMj36UL8cQbX2no1eeSZevg-9x6gSAnIverABcC0A8"
 ```
 
-Token de administrador para GET /login/validade:
+Token de administrador para o header "authorization"
+(Necessário em: GET /login/validade e POST /matches)
 ```
 authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE2NzgwNTk2NjB9.4tJ-_N31IEcXUh8vOONvAEbkGbG5Kz9Ldw5Gko_a2bQ"
 ```
 
-<a name="POSTmatch">Exemplo Body JSON para POST /matches:</a>
+<a name="POSTmatch">Exemplo JSON para POST /matches:</a>
 ```
 {
   "homeTeam": 1,
@@ -74,8 +82,11 @@ authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InJvbGUiOiJhZG1
 }
 ```
 
-Token de usuário para o header "authorization":
+<a name="PATCHmatch">Exemplo de JSON para PATCH /matches/:id</a>
 ```
-authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InJvbGUiOiJ1c2VyIn0sImlhdCI6MTY2NDgxOTY4MH0.VzMj36UL8cQbX2no1eeSZevg-9x6gSAnIverABcC0A8"
+{
+  "homeTeamGoals": 7,
+  "awayTeamGoals": 7
+}
 ```
 </details>
