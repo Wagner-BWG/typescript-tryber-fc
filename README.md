@@ -1,5 +1,6 @@
-# :construction: README em construção ! :construction:
- # ***TFC - Trybe Futebol Clube***
+# ***TFC - Trybe Futebol Clube***
+
+<details><summary>Readme em Português! 🇧🇷 </summary>
 
 O projeto ***TFC - Trybe Futebol Clube*** foi um projeto indivídual de propósito puramente educacional, parte do curso de desenvolvimento web da [Trybe](https://github.com/betrybe).
 
@@ -48,7 +49,7 @@ Estes são os endpoints que podem ser acessados através das requisições de um
 |`GET`|Retorna o placar com a pontuação que os times fizeram nos jogos feitos como "visitante"|http://localhost:3001/leaderboard/away||
 |`GET`|Retorna o placar com a pontuação geral|http://localhost:3001/leaderboard||
 
-<details><summary>Apêndice</summary>
+### Apêndice
 
 <a name="POSTlogin">JSON de administrador para POST /login:</a>
 ```
