@@ -1,6 +1,6 @@
 # ***TFC - Trybe Futebol Clube***
 
-<details><summary>*Readme in English!* 🇺🇸 </summary><br />
+<details><summary><strong>Readme in English! 🇺🇸</strong> </summary><br />
 
 The ***TFC - Trybe Futebol Clube*** was a solo project part of the web development course by [Trybe](https://github.com/betrybe) for purely educational purposes.
 
@@ -94,7 +94,7 @@ authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InJvbGUiOiJhZG1
 ```
 </details>
 
-<details><summary>*Readme em Português!* 🇧🇷 </summary><br />
+<details><summary><strong>Readme em Português! 🇧🇷</strong> </summary><br />
 
 O projeto ***TFC - Trybe Futebol Clube*** foi um projeto indivídual de propósito puramente educacional, parte do curso de desenvolvimento web da [Trybe](https://github.com/betrybe).
 
