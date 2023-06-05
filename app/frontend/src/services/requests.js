@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   // baseURL: `http://localhost:${process.env.REACT_APP_API_PORT || '3001'}`,
-  baseURL: `http://34.95.183.35:3001`,
+  baseURL: `http://10.182.0.5:3001`,
 });
 
 export const setToken = (token) => {
