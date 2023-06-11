@@ -14,11 +14,15 @@ The API communicate with a local database with info over ficticious mathes. The 
 * Use ***TypeScript*** to create a *CRUD* interface, using *ORM*;
 * Write integration tests using ***mocha***, ***chai*** e ***sinon***.
 
-## To run this application locally:
+## How to use:
+
+This application is hosted in a ***Google Cloud Compute Engine***. It's front end can be accessed at http://34.125.102.145:3000 while the back and can be accessed at http://34.125.102.145:3001 . With an API Client (such as Insomnia or Postman) you can make requests to the back end (e.g. http://34.125.102.145:3001/login ) to visualize the responses that would have been sent to the front end.
+
+### Or to run this application locally:
 
 The app has its 3 components, backend, frontend and DB, dockerized.
 Clone this repository and in its root folder execute the command `npm run compose:up` to start up the dockerized app.
-Fron-end is accessed via `localhost:3000` and back-end via `localhost:3001`
+Fron-end is accessed via `localhost:3000` and back-end via `localhost:3001`, so back end requests can be done with an API Client on your localhost (e.g. http://localhost:3001/login ).
 
 To run the available integration tests, in the root folder execute the following commands to intall the dependencies and execute the tests:
 
@@ -35,21 +39,21 @@ To take down the app, execute `npm run compose:down` in the root folder.
 
 ### Endpoints:
 
-These are the endpoints that can be requested using an API Client (such as Insomnia or Postman)
+These are the endpoints that can be requested using an API Client (subistitute the * with either the GCloud server address or, if you're running it locally, the localhost:3001).
 
 |Method|Funcionality|URL|Observations
 |------|--------------|---|-----------|
-|`POST`|Logs in as a registered user or administrator.|http://localhost:3001/login|[This request needs a JSON.](#POSTlogin)|
-|`GET`|Returns info on if the account belongs to a user or an administrator.|http://localhost:3001/login/validate|[This request needs and Authorization header.](#tokenUser)|
-|`GET`|Returns the teams and their respective ids.|http://localhost:3001/teams||
-|`GET`|Return one team an it's respective id.|http://localhost:3001/teams/:id||
-|`GET`|Returns a list of all matches.|http://localhost:3001/matches|The query "inProgress=true" or "inProgress=false" to return only matches that are still in progress or that have already ended.|
-|`POST`|Adds a new match to the list of matches.|http://localhost:3001/matches|[This request needs a JSON](#POSTmatch) and an [authorization header](#POSTlogin)|
-|`PATCH`|Marks a match as finished.|http://localhost:3001/matches/:id/finish|[This request needs and Authorization header.](#tokenUser)|
-|`PATCH`|Sets the score for each team in a match.|http://localhost:3001/matches/:id/|[This request needs a JSON](#POSTmatch) and an [authorization header](#POSTlogin)|
-|`GET`|Returns the scoreboard considering only the matches where each team played "at home"|http://localhost:3001/leaderboard/home||
-|`GET`|Returns the scoreboard considering only the matches where each team played "as visitor"|http://localhost:3001/leaderboard/away||
-|`GET`|Returns the complete scoreboard|http://localhost:3001/leaderboard||
+|`POST`|Logs in as a registered user or administrator.|*/login|[This request needs a JSON.](#POSTlogin)|
+|`GET`|Returns info on if the account belongs to a user or an administrator.|*/login/validate|[This request needs and Authorization header.](#tokenUser)|
+|`GET`|Returns the teams and their respective ids.|*/teams||
+|`GET`|Return one team an it's respective id.|*/teams/:id||
+|`GET`|Returns a list of all matches.|*/matches|The query "inProgress=true" or "inProgress=false" to return only matches that are still in progress or that have already ended.|
+|`POST`|Adds a new match to the list of matches.|*/matches|[This request needs a JSON](#POSTmatch) and an [authorization header](#POSTlogin)|
+|`PATCH`|Marks a match as finished.|*/matches/:id/finish|[This request needs and Authorization header.](#tokenUser)|
+|`PATCH`|Sets the score for each team in a match.|*/matches/:id/|[This request needs a JSON](#POSTmatch) and an [authorization header](#POSTlogin)|
+|`GET`|Returns the scoreboard considering only the matches where each team played "at home"|*/leaderboard/home||
+|`GET`|Returns the scoreboard considering only the matches where each team played "as visitor"|*/leaderboard/away||
+|`GET`|Returns the complete scoreboard|*/leaderboard||
 
 ### Appendix
 
@@ -108,11 +112,15 @@ A API comunica-se com um banco de dados local com informações sobre partidas f
 * A construção de um *CRUD* com ***TypeScript***, utilizando *ORM*;
 * A construção de testes de cobertura usando ***mocha***, ***chai*** e ***sinon***.
 
-## Para rodar essa aplicação localmente:
+## Intruções de uso:
+
+Esta aplicação está hospedada em um ***Google Cloud Compute Engine***. O front end pode ser acessado em http://34.125.102.145:3000 enquanto o back and pode ser acessadso em http://34.125.102.145:3001 . Com um API Client (como Insomnia ou Postman) você pode fazer requisições para o back end (ex.: http://34.125.102.145:3001/login ) para visualizar as repostas que seriam enviadas ao front end.
+
+### Para rodar essa aplicação localmente:
 
 A aplicação tem seus 3 componentes, backend, frontend e banco de dados, dockerizados.
 Clone o repositório e em sua pasta raíz execute o comando `npm run compose:up` para iniciar a aplicação dockerizada.
-O front-end é acessado via `localhost:3000` e o back-end via `localhost:3001`
+O front-end é acessado via `localhost:3000` e o back-end via `localhost:3001`, então as requisições para o back end requests podem ser feitas com um API Client no seu localhost (e.g. http://localhost:3001/login ).
 
 Para rodar os testes de integração disponívies, exceute na pasta raíz os seguintes comandos para instalar as dependências e executar os testes:
 
@@ -129,21 +137,21 @@ Para parar a aplicação, execute o comando `npm run compose:down` na pasta raí
 
 ### Endpoints:
 
-Estes são os endpoints que podem ser acessados através das requisições de um API Client (como Insomnia ou Postman)
+Estes são os endpoints que podem receber requisições de um API Client (subistitua o * com o endereço do servidor no GCloud ou, se estiver rodando localmente, o localhost:3001).
 
 |Método|Funcionalidade|URL|Observações|
 |------|--------------|---|-----------|
-|`POST`|Efetua login de um usuário ou administrador cadastrado.|http://localhost:3001/login|[Está requisição necessita de um JSON.](#POSTlogin)|
-|`GET`|Retorna se a conta é um usuário ou administrador.|http://localhost:3001/login/validate|[Está requisição necessita de um header de autorização.](#tokenUser)|
-|`GET`|Retorna os times cadastrados e seus respctivos ids.|http://localhost:3001/teams||
-|`GET`|Retorna um time cadastrado e seu respctivo id.|http://localhost:3001/teams/:id||
-|`GET`|Retorna a lista de todas as partidas.|http://localhost:3001/matches|Pode-se usar a query "inProgress=true" ou "inProgress=false" para retornar apenas partidas em progresso ou já terminadas.|
-|`POST`|Adiciona uma nova partida à lista de partidas.|http://localhost:3001/matches|[Está requsição necessita de um JSON](#POSTmatch) e um [header de autorização](#POSTlogin)|
-|`PATCH`|Marca uma partida como encerrada.|http://localhost:3001/matches/:id/finish|[Está requisição necessita de um header de autorização.](#tokenUser)|
-|`PATCH`|Altera o placar da partida.|http://localhost:3001/matches/:id/|[Está requsição necessita de um JSON](#PATCHmatch) e um [header de autorização](#POSTlogin)|
-|`GET`|Retorna o placar com a pontuação que os times fizeram nos jogos feitos "em casa"|http://localhost:3001/leaderboard/home||
-|`GET`|Retorna o placar com a pontuação que os times fizeram nos jogos feitos como "visitante"|http://localhost:3001/leaderboard/away||
-|`GET`|Retorna o placar com a pontuação geral|http://localhost:3001/leaderboard||
+|`POST`|Efetua login de um usuário ou administrador cadastrado.|*/login|[Está requisição necessita de um JSON.](#POSTlogin)|
+|`GET`|Retorna se a conta é um usuário ou administrador.|*/login/validate|[Está requisição necessita de um header de autorização.](#tokenUser)|
+|`GET`|Retorna os times cadastrados e seus respctivos ids.|*/teams||
+|`GET`|Retorna um time cadastrado e seu respctivo id.|*/teams/:id||
+|`GET`|Retorna a lista de todas as partidas.|*/matches|Pode-se usar a query "inProgress=true" ou "inProgress=false" para retornar apenas partidas em progresso ou já terminadas.|
+|`POST`|Adiciona uma nova partida à lista de partidas.|*/matches|[Está requsição necessita de um JSON](#POSTmatch) e um [header de autorização](#POSTlogin)|
+|`PATCH`|Marca uma partida como encerrada.|*/matches/:id/finish|[Está requisição necessita de um header de autorização.](#tokenUser)|
+|`PATCH`|Altera o placar da partida.|*/matches/:id/|[Está requsição necessita de um JSON](#PATCHmatch) e um [header de autorização](#POSTlogin)|
+|`GET`|Retorna o placar com a pontuação que os times fizeram nos jogos feitos "em casa"|*/leaderboard/home||
+|`GET`|Retorna o placar com a pontuação que os times fizeram nos jogos feitos como "visitante"|*/leaderboard/away||
+|`GET`|Retorna o placar com a pontuação geral|*/leaderboard||
 
 ### Apêndice
 
